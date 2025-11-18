@@ -338,7 +338,7 @@ function startScript() {
     let runningClaim = false;
 
     async function watchDistribution(jwt) {
-      console.log("👁 Watching for distribution...");
+      console.log("👁 Watching For Distribution!");
 
       while (true) {
         try {
