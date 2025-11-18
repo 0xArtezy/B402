@@ -11,6 +11,59 @@ console.log = function (...args) {
 };
 // ─────────────────────────────
 
+// ───── Hide summary & show 1-line summary ─────
+const originalLog4 = console.log;
+
+let captureSummary = false;
+let summaryArray = [];
+
+console.log = function (...args) {
+  const text = typeof args[0] === "string" ? args[0] : "";
+
+  // Deteksi baris awal SUMMARY
+  if (text.includes("📊 SUMMARY")) {
+    captureSummary = true;    // mulai tangkap array
+    summaryArray = [];        // reset
+    return;                   // jangan tampilkan original
+  }
+
+  // Ketika summary sedang ditangkap
+  if (captureSummary) {
+    // Baris array seperti: ['failed','failed']
+    if (Array.isArray(args[0])) {
+      summaryArray = args[0]; 
+      return; // jangan tampilkan original
+    }
+
+    // Jika baris kosong atau lanjutan array → sembunyikan
+    if (
+      text.includes("'failed'") ||
+      text.includes("'success'") ||
+      text.trim().startsWith("'") ||
+      text.trim().startsWith("[") ||
+      text.trim().startsWith("]")
+    ) return;
+
+    // Ketika summary selesai (baris selain di atas)
+    // Tampilkan ringkasan 1 baris
+    const successCount = summaryArray.filter(x => x === "success").length;
+    const failCount = summaryArray.filter(x => x === "failed").length;
+
+    originalLog4(`📊 SUMMARY: ${successCount} success | ${failCount} failed`);
+
+    // stop capturing
+    captureSummary = false;
+    summaryArray = [];
+
+    // Lanjutkan log normal
+    originalLog4(...args);
+    return;
+  }
+
+  // Log normal
+  originalLog4.apply(console, args);
+};
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
