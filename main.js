@@ -27,7 +27,7 @@ async function ask(question) {
     process.exit(1);
   }
 
-  let INPUT_MINT = await ask("Masukkan jumlah mint (MINT_COUNT, default = 10): ");
+  let INPUT_MINT = await ask("Masukkan jumlah mint (default = 10): ");
 
   if (!INPUT_MINT.trim()) {
     INPUT_MINT = 10; // DEFAULT
