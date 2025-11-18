@@ -140,7 +140,7 @@ function startScript() {
     console.log("========================================================\n");
     console.log("Address :", WALLET);
     console.log("USDT    :", usdtFinal);
-    console.log("BNB     :", bnb);
+    console.log("BNB     :", bnb, "\n");
     console.log("========================================================\n");
   }
 
@@ -381,7 +381,7 @@ function startScript() {
     const verify = await verifyChallenge(lid, signed, ts);
     const jwt = verify.jwt || verify.token;
 
-    console.log("🟢 LOGIN SUCCESS!");
+    console.log("🟢 LOGIN SUCCESS!\n");
 
     watchDistribution(jwt);
   }
