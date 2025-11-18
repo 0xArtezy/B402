@@ -348,7 +348,7 @@ function startScript() {
 
             for (const tx of d.transactions) {
               if (!runningClaim && WATCH_ADDR.includes(tx.from.toLowerCase())) {
-                console.log("🔥 DISTRIBUTION DETECTED");
+                console.log("🔥 DISTRIBUTION DETECTED\n");
 
                 runningClaim = true;
                 await runClaim(jwt);
